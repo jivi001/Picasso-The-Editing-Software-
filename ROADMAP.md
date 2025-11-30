@@ -98,3 +98,12 @@
     *   [ ] **Project Sync**: Logic to sync project database to cloud.
     *   [ ] **Documentation**: Comprehensive README and Developer Guide.
 *   **Testing**: Post a comment on a timestamp, verify it appears on another client (mocked).
+
+## Sprint 12: Quality Assurance & CI/CD (Days 161-174)
+*   **Goal**: Establish a robust testing framework and automated build pipeline.
+*   **Deliverables**:
+    *   [ ] **Unit Testing Framework**: Integrate Google Test (GTest) for C++ core.
+    *   [ ] **CI Pipeline**: GitHub Actions workflow for Windows build.
+    *   [ ] **Static Analysis**: Integrate `clang-tidy` or `cppcheck`.
+    *   [ ] **Flutter Tests**: Widget tests for critical UI components.
+*   **Testing**: Run `ctest` and see 100% pass rate. Push to main and see green checkmark.

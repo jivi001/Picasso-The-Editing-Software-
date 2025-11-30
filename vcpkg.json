@@ -16,7 +16,8 @@
     "spdlog",
     "freetype",
     "lua",
-    "cpr"
+    "cpr",
+    "gtest"
   ],
   "builtin-baseline": "35b69f4305889246a4829396739943444e277717"
 }

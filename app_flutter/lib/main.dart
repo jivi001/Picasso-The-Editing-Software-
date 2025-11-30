@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ui/node_editor/node_graph_widget.dart';
+import 'core/theme/picasoo_theme.dart';
+import 'ui/layouts/main_window_layout.dart';
 
 void main() {
   runApp(const PicasooApp());
@@ -12,12 +13,8 @@ class PicasooApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Picasoo Video Editor',
-      theme: ThemeData(
-        brightness: Brightness.dark,
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
-      ),
-      home: const MainWindow(),
+      theme: PicasooTheme.darkTheme,
+      home: const MainWindowLayout(),
     );
   }
 }
@@ -38,7 +35,8 @@ class MainWindow extends StatelessWidget {
               children: [
                 IconButton(icon: const Icon(Icons.folder), onPressed: () {}),
                 IconButton(icon: const Icon(Icons.movie), onPressed: () {}),
-                IconButton(icon: const Icon(Icons.color_lens), onPressed: () {}),
+                IconButton(
+                    icon: const Icon(Icons.color_lens), onPressed: () {}),
               ],
             ),
           ),
