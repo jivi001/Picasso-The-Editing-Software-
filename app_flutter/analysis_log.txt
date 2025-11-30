@@ -1,0 +1,4 @@
+Analyzing app_flutter...                                        
+
+   info - Statements in an if should be enclosed in a block - lib\ui\pages\cut_page.dart:235:39 - curly_braces_in_flow_control_structures
+

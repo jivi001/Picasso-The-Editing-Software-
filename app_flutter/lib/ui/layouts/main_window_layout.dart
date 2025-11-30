@@ -10,6 +10,9 @@ import '../pages/fusion_page.dart';
 import '../pages/deliver_page.dart';
 import '../../ui/pages/audio_page.dart';
 
+import 'package:provider/provider.dart';
+import '../../core/project_state.dart';
+
 class MainWindowLayout extends StatefulWidget {
   const MainWindowLayout({super.key});
 
@@ -19,6 +22,7 @@ class MainWindowLayout extends StatefulWidget {
 
 class _MainWindowLayoutState extends State<MainWindowLayout> {
   AppPage _currentPage = AppPage.edit;
+  final _projectState = ProjectState();
 
   void _navigateTo(AppPage page) {
     setState(() {
@@ -47,96 +51,99 @@ class _MainWindowLayoutState extends State<MainWindowLayout> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(
-        children: [
-          // Top Bar
-          Container(
-            height: 40,
-            color: PicasooColors.surface2,
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Row(
-              children: [
-                // Menu
-                const Icon(Icons.menu, color: PicasooColors.textMed),
-                const SizedBox(width: 16),
-                // Project Name
-                const Text('Untitled Project', style: PicasooTypography.h2),
-                const Spacer(),
-                // Workspace Tools
-                PicasooButton(
-                  label: 'Export',
-                  onPressed: () {},
-                  variant: PicasooButtonVariant.primary,
-                  isCompact: true,
-                ),
-              ],
-            ),
-          ),
-          // Main Content Area
-          Expanded(
-            child: Row(
-              children: [
-                // Sidebar (Navigation)
-                Container(
-                  width: 60,
-                  color: PicasooColors.surface1,
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 16),
-                      _SidebarItem(
-                        icon: Icons.folder,
-                        label: 'Media',
-                        isSelected: _currentPage == AppPage.media,
-                        onTap: () => _navigateTo(AppPage.media),
-                      ),
-                      _SidebarItem(
-                        icon: Icons.movie_creation,
-                        label: 'Cut',
-                        isSelected: _currentPage == AppPage.cut,
-                        onTap: () => _navigateTo(AppPage.cut),
-                      ),
-                      _SidebarItem(
-                        icon: Icons.edit,
-                        label: 'Edit',
-                        isSelected: _currentPage == AppPage.edit,
-                        onTap: () => _navigateTo(AppPage.edit),
-                      ),
-                      _SidebarItem(
-                        icon: Icons.auto_fix_high,
-                        label: 'Fusion',
-                        isSelected: _currentPage == AppPage.fusion,
-                        onTap: () => _navigateTo(AppPage.fusion),
-                      ),
-                      _SidebarItem(
-                        icon: Icons.color_lens,
-                        label: 'Color',
-                        isSelected: _currentPage == AppPage.color,
-                        onTap: () => _navigateTo(AppPage.color),
-                      ),
-                      _SidebarItem(
-                        icon: Icons.music_note,
-                        label: 'Audio',
-                        isSelected: _currentPage == AppPage.audio,
-                        onTap: () => _navigateTo(AppPage.audio),
-                      ),
-                      _SidebarItem(
-                        icon: Icons.rocket_launch,
-                        label: 'Deliver',
-                        isSelected: _currentPage == AppPage.deliver,
-                        onTap: () => _navigateTo(AppPage.deliver),
-                      ),
-                    ],
+    return ChangeNotifierProvider.value(
+      value: _projectState,
+      child: Scaffold(
+        body: Column(
+          children: [
+            // Top Bar
+            Container(
+              height: 40,
+              color: PicasooColors.surface2,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  // Menu
+                  const Icon(Icons.menu, color: PicasooColors.textMed),
+                  const SizedBox(width: 16),
+                  // Project Name
+                  const Text('Untitled Project', style: PicasooTypography.h2),
+                  const Spacer(),
+                  // Workspace Tools
+                  PicasooButton(
+                    label: 'Export',
+                    onPressed: () {},
+                    variant: PicasooButtonVariant.primary,
+                    isCompact: true,
                   ),
-                ),
-                // Workspace View
-                Expanded(
-                  child: _buildCurrentPage(),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            // Main Content Area
+            Expanded(
+              child: Row(
+                children: [
+                  // Sidebar (Navigation)
+                  Container(
+                    width: 60,
+                    color: PicasooColors.surface1,
+                    child: Column(
+                      children: [
+                        const SizedBox(height: 16),
+                        _SidebarItem(
+                          icon: Icons.folder,
+                          label: 'Media',
+                          isSelected: _currentPage == AppPage.media,
+                          onTap: () => _navigateTo(AppPage.media),
+                        ),
+                        _SidebarItem(
+                          icon: Icons.movie_creation,
+                          label: 'Cut',
+                          isSelected: _currentPage == AppPage.cut,
+                          onTap: () => _navigateTo(AppPage.cut),
+                        ),
+                        _SidebarItem(
+                          icon: Icons.edit,
+                          label: 'Edit',
+                          isSelected: _currentPage == AppPage.edit,
+                          onTap: () => _navigateTo(AppPage.edit),
+                        ),
+                        _SidebarItem(
+                          icon: Icons.auto_fix_high,
+                          label: 'Fusion',
+                          isSelected: _currentPage == AppPage.fusion,
+                          onTap: () => _navigateTo(AppPage.fusion),
+                        ),
+                        _SidebarItem(
+                          icon: Icons.color_lens,
+                          label: 'Color',
+                          isSelected: _currentPage == AppPage.color,
+                          onTap: () => _navigateTo(AppPage.color),
+                        ),
+                        _SidebarItem(
+                          icon: Icons.music_note,
+                          label: 'Audio',
+                          isSelected: _currentPage == AppPage.audio,
+                          onTap: () => _navigateTo(AppPage.audio),
+                        ),
+                        _SidebarItem(
+                          icon: Icons.rocket_launch,
+                          label: 'Deliver',
+                          isSelected: _currentPage == AppPage.deliver,
+                          onTap: () => _navigateTo(AppPage.deliver),
+                        ),
+                      ],
+                    ),
+                  ),
+                  // Workspace View
+                  Expanded(
+                    child: _buildCurrentPage(),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

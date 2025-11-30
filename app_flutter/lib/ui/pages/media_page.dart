@@ -1,8 +1,11 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart' as path;
+import 'package:file_picker/file_picker.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/picasoo_colors.dart';
 import '../../core/theme/picasoo_typography.dart';
+import '../../core/project_state.dart';
 
 enum FileFilter { all, videos, images }
 
@@ -17,6 +20,7 @@ class _MediaPageState extends State<MediaPage> {
   Directory _currentDir = Directory.current;
   List<FileSystemEntity> _allFiles = [];
   List<FileSystemEntity> _filteredFiles = [];
+  List<Directory> _availableDrives = [];
   bool _isLoading = false;
   String? _errorMessage;
   FileFilter _currentFilter = FileFilter.all;
@@ -29,7 +33,18 @@ class _MediaPageState extends State<MediaPage> {
     '.mkv',
     '.avi',
     '.webm',
-    '.m4v'
+    '.m4v',
+    '.hevc',
+    '.flv',
+    '.wmv',
+    '.mpg',
+    '.mpeg',
+    '.3gp',
+    '.ts',
+    '.mts',
+    '.m2ts',
+    '.vob',
+    '.ogv',
   ];
   static const List<String> _imageExtensions = [
     '.jpg',
@@ -37,12 +52,24 @@ class _MediaPageState extends State<MediaPage> {
     '.png',
     '.gif',
     '.bmp',
-    '.webp'
+    '.webp',
+    '.heic',
+    '.heif',
+    '.tiff',
+    '.tif',
+    '.svg',
+    '.ico',
+    '.raw',
+    '.dng',
+    '.cr2',
+    '.nef',
+    '.arw',
   ];
 
   @override
   void initState() {
     super.initState();
+    _scanDrives();
     _loadFiles(_currentDir);
     _searchController.addListener(_filterFiles);
   }
@@ -51,6 +78,28 @@ class _MediaPageState extends State<MediaPage> {
   void dispose() {
     _searchController.dispose();
     super.dispose();
+  }
+
+  Future<void> _scanDrives() async {
+    List<Directory> drives = [];
+    // Check drives A through Z
+    for (int i = 65; i <= 90; i++) {
+      final char = String.fromCharCode(i);
+      final drive = Directory('$char:\\');
+      try {
+        if (await drive.exists()) {
+          drives.add(drive);
+        }
+      } catch (e) {
+        // Ignore drives we can't check
+      }
+    }
+
+    if (mounted) {
+      setState(() {
+        _availableDrives = drives;
+      });
+    }
   }
 
   Future<void> _loadFiles(Directory dir) async {
@@ -156,6 +205,143 @@ class _MediaPageState extends State<MediaPage> {
     return _imageExtensions.contains(ext);
   }
 
+  /// Ensures a directory exists, creating it if necessary with user confirmation
+  Future<Directory?> _ensureDirectoryExists(String dirPath) async {
+    try {
+      final dir = Directory(dirPath);
+      if (!await dir.exists()) {
+        // Show dialog asking to create
+        final shouldCreate = await _showCreateFolderDialog(dirPath);
+        if (shouldCreate == true) {
+          await dir.create(recursive: true);
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Created folder: $dirPath'),
+                backgroundColor: Colors.green,
+                duration: const Duration(seconds: 2),
+              ),
+            );
+          }
+          return dir;
+        }
+        return null;
+      }
+      return dir;
+    } on FileSystemException catch (e) {
+      if (mounted) {
+        _showErrorDialog(
+          'Cannot access folder',
+          'Path: $dirPath\n\nError: ${e.message}\n\nTry running as administrator or check folder permissions.',
+        );
+      }
+      return null;
+    } catch (e) {
+      if (mounted) {
+        _showErrorDialog('Cannot access folder', e.toString());
+      }
+      return null;
+    }
+  }
+
+  /// Shows a dialog asking user to confirm folder creation
+  Future<bool?> _showCreateFolderDialog(String dirPath) async {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: PicasooColors.surface1,
+        title: const Text('Folder Not Found', style: PicasooTypography.h2),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'The folder does not exist:',
+              style: PicasooTypography.body,
+            ),
+            const SizedBox(height: 8),
+            Container(
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                color: PicasooColors.surface0,
+                borderRadius: BorderRadius.circular(4),
+              ),
+              child: Text(
+                dirPath,
+                style: PicasooTypography.small.copyWith(
+                  color: PicasooColors.textMed,
+                ),
+              ),
+            ),
+            const SizedBox(height: 16),
+            const Text(
+              'Would you like to create it?',
+              style: PicasooTypography.body,
+            ),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child:
+                const Text('Cancel', style: TextStyle(color: Colors.white70)),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: PicasooColors.primary,
+            ),
+            child: const Text('Create Folder'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Shows an error dialog with detailed information
+  void _showErrorDialog(String title, String message) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: PicasooColors.surface1,
+        title: Row(
+          children: [
+            const Icon(Icons.error_outline, color: Colors.red),
+            const SizedBox(width: 8),
+            Text(title, style: PicasooTypography.h2),
+          ],
+        ),
+        content: Text(message, style: PicasooTypography.body),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK', style: TextStyle(color: Colors.white)),
+          ),
+        ],
+      ),
+    );
+  }
+
+  /// Opens a folder picker to browse for a custom folder
+  Future<void> _browseForFolder() async {
+    try {
+      final result = await FilePicker.platform.getDirectoryPath(
+        dialogTitle: 'Select Folder',
+      );
+
+      if (result != null) {
+        _loadFiles(Directory(result));
+      }
+    } catch (e) {
+      if (mounted) {
+        _showErrorDialog(
+          'Cannot open folder browser',
+          'Error: ${e.toString()}',
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -184,6 +370,8 @@ class _MediaPageState extends State<MediaPage> {
   }
 
   Widget _buildSidebar() {
+    final userProfile = Platform.environment['USERPROFILE'] ?? 'C:\\';
+
     return Container(
       width: 250,
       color: PicasooColors.surface1,
@@ -203,25 +391,94 @@ class _MediaPageState extends State<MediaPage> {
           _buildLocationItem(
             Icons.home,
             'Home',
-            () => _loadFiles(
-                Directory(Platform.environment['USERPROFILE'] ?? 'C:\\')),
+            () => _loadFiles(Directory(userProfile)),
+          ),
+          _buildLocationItem(
+            Icons.desktop_windows,
+            'Desktop',
+            () async {
+              final dir = await _ensureDirectoryExists('$userProfile\\Desktop');
+              if (dir != null) _loadFiles(dir);
+            },
+          ),
+          _buildLocationItem(
+            Icons.folder,
+            'Documents',
+            () async {
+              final dir =
+                  await _ensureDirectoryExists('$userProfile\\Documents');
+              if (dir != null) _loadFiles(dir);
+            },
           ),
           _buildLocationItem(
             Icons.download,
             'Downloads',
-            () => _loadFiles(
-                Directory('${Platform.environment['USERPROFILE']}\\Downloads')),
+            () async {
+              final dir =
+                  await _ensureDirectoryExists('$userProfile\\Downloads');
+              if (dir != null) _loadFiles(dir);
+            },
+          ),
+          _buildLocationItem(
+            Icons.image,
+            'Pictures',
+            () async {
+              final dir =
+                  await _ensureDirectoryExists('$userProfile\\Pictures');
+              if (dir != null) _loadFiles(dir);
+            },
           ),
           _buildLocationItem(
             Icons.movie,
             'Videos',
-            () => _loadFiles(
-                Directory('${Platform.environment['USERPROFILE']}\\Videos')),
+            () async {
+              final dir = await _ensureDirectoryExists('$userProfile\\Videos');
+              if (dir != null) _loadFiles(dir);
+            },
+          ),
+          _buildLocationItem(
+            Icons.music_note,
+            'Music',
+            () async {
+              final dir = await _ensureDirectoryExists('$userProfile\\Music');
+              if (dir != null) _loadFiles(dir);
+            },
+          ),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+            child: Divider(color: PicasooColors.surface2),
+          ),
+
+          // Drives
+          if (_availableDrives.isNotEmpty) ...[
+            const Padding(
+              padding: EdgeInsets.all(16.0),
+              child: Text('Drives', style: PicasooTypography.h2),
+            ),
+            ..._availableDrives.map((drive) {
+              return _buildLocationItem(
+                Icons.storage,
+                drive.path,
+                () => _loadFiles(drive),
+              );
+            }),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+              child: Divider(color: PicasooColors.surface2),
+            ),
+          ],
+
+          // Browse for custom folder
+          _buildLocationItem(
+            Icons.folder_open,
+            'Browse...',
+            _browseForFolder,
           ),
 
           // Recent paths
           if (_recentPaths.isNotEmpty) ...[
-            const SizedBox(height: 24),
+            const SizedBox(height: 16),
             const Padding(
               padding: EdgeInsets.all(16.0),
               child: Text('Recent', style: PicasooTypography.h2),
@@ -309,7 +566,10 @@ class _MediaPageState extends State<MediaPage> {
           // Refresh
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.white, size: 20),
-            onPressed: () => _loadFiles(_currentDir),
+            onPressed: () {
+              _scanDrives();
+              _loadFiles(_currentDir);
+            },
             tooltip: 'Refresh',
           ),
         ],
@@ -385,7 +645,8 @@ class _MediaPageState extends State<MediaPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Icon(Icons.folder_open, size: 48, color: PicasooColors.textLow),
+            const Icon(Icons.folder_open,
+                size: 48, color: PicasooColors.textLow),
             const SizedBox(height: 16),
             Text(
               _searchController.text.isEmpty ? 'Empty folder' : 'No results',
@@ -443,11 +704,12 @@ class _MediaPageState extends State<MediaPage> {
           if (isDir) {
             _loadFiles(file);
           } else {
-            // TODO: Add to media pool or preview
+            context.read<ProjectState>().addMedia(file);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
-                content: Text('Added: $name'),
+                content: Text('Added to Project: $name'),
                 duration: const Duration(seconds: 1),
+                backgroundColor: PicasooColors.primary,
               ),
             );
           }

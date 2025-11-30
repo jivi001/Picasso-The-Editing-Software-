@@ -41,6 +41,11 @@ class _DartVideoPlayerState extends State<DartVideoPlayer> {
   void didUpdateWidget(DartVideoPlayer oldWidget) {
     super.didUpdateWidget(oldWidget);
 
+    // Handle video path change
+    if (widget.videoPath != oldWidget.videoPath) {
+      player.open(Media(widget.videoPath));
+    }
+
     // Update playback position when timeline changes
     if (widget.currentTime != oldWidget.currentTime) {
       player.seek(widget.currentTime);

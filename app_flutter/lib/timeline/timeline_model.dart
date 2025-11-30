@@ -43,6 +43,7 @@ class Clip {
   });
 
   Clip copyWith({
+    String? id,
     Duration? timelinePosition,
     Duration? inPoint,
     Duration? outPoint,
@@ -54,7 +55,7 @@ class Clip {
     double? opacity,
   }) {
     return Clip(
-      id: id,
+      id: id ?? this.id,
       mediaId: mediaId,
       mediaPath: mediaPath,
       type: type,
@@ -125,6 +126,11 @@ class Timeline extends ChangeNotifier {
 
   void setPlayheadPosition(Duration position) {
     _playheadPosition = position;
+    notifyListeners();
+  }
+
+  void refresh() {
+    _updateDuration();
     notifyListeners();
   }
 

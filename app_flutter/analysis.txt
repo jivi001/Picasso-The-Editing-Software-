@@ -1,0 +1,6 @@
+Analyzing app_flutter...                                        
+
+   info - Use 'const' for final variables initialized to a constant value - lib\core\project_state.dart:126:5 - prefer_const_declarations
+   info - Use 'const' for final variables initialized to a constant value - lib\core\project_state.dart:239:5 - prefer_const_declarations
+   info - 'onAccept' is deprecated and shouldn't be used. Use onAcceptWithDetails instead. This callback is similar to onAcceptWithDetails but does not provide drag details. This feature was deprecated after v3.14.0-0.2.pre - lib\ui\organisms\timeline_widget.dart:215:35 - deprecated_member_use
+

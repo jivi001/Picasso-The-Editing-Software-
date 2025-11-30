@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'core/theme/picasoo_theme.dart';
-import 'ui/layouts/main_window_layout.dart';
+import 'ui/pages/main_page.dart';
 
 void main() {
   runApp(const PicasooApp());
@@ -14,7 +14,7 @@ class PicasooApp extends StatelessWidget {
     return MaterialApp(
       title: 'Picasoo Video Editor',
       theme: PicasooTheme.darkTheme,
-      home: const MainWindowLayout(),
+      home: const MainPage(),
     );
   }
 }
