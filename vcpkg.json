@@ -7,13 +7,24 @@
     "opencv",
     "assimp",
     "openvdb",
-    "portaudio",
-    "sqlite3",
-    "nlohmann-json",
-    "protobuf",
-    "directxtk12",
-    "fmt",
-    "spdlog"
-  ],
-  "builtin-baseline": "35b69f4305889246a4829396739943444e277717"
-}
+    {
+      "name": "picasoo-core",
+      "version-string": "0.1.0",
+      "dependencies": [
+        "ffmpeg",
+        "gstreamer",
+        "opencv",
+        "assimp",
+        "openvdb",
+        "portaudio",
+        "sqlite3",
+        "nlohmann-json",
+        "protobuf",
+        "directxtk12",
+        "fmt",
+        "spdlog",
+        "freetype",
+        "lua"
+      ],
+      "builtin-baseline": "35b69f4305889246a4829396739943444e277717"
+    }

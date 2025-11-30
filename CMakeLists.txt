@@ -22,6 +22,16 @@ add_subdirectory(native/common)
 add_subdirectory(native/video_engine)
 add_subdirectory(native/ipc)
 add_subdirectory(native/node_runtime)
+add_subdirectory(native/vfx_host)
+add_subdirectory(native/color_engine)
+add_subdirectory(native/audio_engine)
+add_subdirectory(native/ai_engine)
+add_subdirectory(native/database)
+add_subdirectory(native/render_worker)
+add_subdirectory(native/animation)
+add_subdirectory(native/titling_engine)
+add_subdirectory(native/timeline)
+add_subdirectory(native/scripting)
 # add_subdirectory(native/panels)       # Uncomment when created
 
 # Main Library / Executable definitions will go here or in subdirectories

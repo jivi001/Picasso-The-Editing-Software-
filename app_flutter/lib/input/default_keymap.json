@@ -1,0 +1,9 @@
+{
+    "File.Save": "Control+S",
+    "File.Open": "Control+O",
+    "Edit.Undo": "Control+Z",
+    "Edit.Redo": "Control+Shift+Z",
+    "Playback.PlayPause": "Space",
+    "Playback.Stop": "K",
+    "Timeline.Split": "Control+B"
+}

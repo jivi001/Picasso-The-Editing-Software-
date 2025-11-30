@@ -53,3 +53,39 @@
     *   [x] User Manual & Documentation.
     *   [x] Final Bug Fixes & UI Polish.
 *   **Milestone**: Alpha Release to internal testers.
+
+## Sprint 7: Animation & Titling (Days 91-104)
+*   **Goal**: Enable dynamic motion graphics and text overlays.
+*   **Deliverables**:
+    *   [ ] **Keyframe System**: C++ backend for Bezier interpolation of parameters.
+    *   [ ] **Curve Editor**: Flutter UI for visualizing and editing keyframes.
+    *   [ ] **Titling Engine**: Native text rendering using FreeType/HarfBuzz.
+    *   [ ] **Text Node**: New node type for generating text textures.
+*   **Testing**: Animate a text overlay moving across the screen with ease-in/out.
+
+## Sprint 8: Timeline & Media Pool (Days 105-118)
+*   **Goal**: Build the core non-linear editing (NLE) interface.
+*   **Deliverables**:
+    *   [ ] **Timeline UI**: High-performance Flutter widget for multi-track editing.
+    *   [ ] **Media Pool**: Asset management interface with drag-and-drop support.
+    *   [ ] **Timeline Backend**: C++ data structures for Tracks, Clips, and Composition.
+    *   [ ] **Property Inspector**: UI to edit clip/node parameters.
+*   **Testing**: Drag a clip from Media Pool to Timeline, move it, and adjust its opacity.
+
+## Sprint 9: Delivery & Audio Mixing (Days 119-132)
+*   **Goal**: Complete the production pipeline with Export and Audio Mixing interfaces.
+*   **Deliverables**:
+    *   [ ] **Deliver Page**: UI for configuring render settings (Format, Codec, Resolution).
+    *   [ ] **Audio Mixer**: UI with Faders, Meters, and Pan controls.
+    *   [ ] **Shortcut Manager**: JSON-based keymapping system for keyboard shortcuts.
+    *   [ ] **Render Queue UI**: Monitor progress of background render jobs.
+*   **Testing**: Mix audio levels, set export to H.264 1080p, and verify output file.
+
+## Sprint 10: Advanced Workflows & Optimization (Days 133-146)
+*   **Goal**: Implement professional workflows and optimize performance.
+*   **Deliverables**:
+    *   [ ] **Multi-Cam Support**: UI for viewing multiple angles and switching.
+    *   [ ] **Proxy Workflow**: Toggle to switch between Original and Proxy media.
+    *   [ ] **Scripting API**: Lua bindings for automating timeline tasks.
+    *   [ ] **Hardware Encoding**: Integrate NVENC/QSV in Render Worker.
+*   **Testing**: Sync 2 clips by audio, toggle proxies during playback, run a Lua script to add a clip.
