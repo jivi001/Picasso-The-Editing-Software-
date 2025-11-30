@@ -32,6 +32,7 @@ add_subdirectory(native/animation)
 add_subdirectory(native/titling_engine)
 add_subdirectory(native/timeline)
 add_subdirectory(native/scripting)
+add_subdirectory(native/cloud_client)
 # add_subdirectory(native/panels)       # Uncomment when created
 
 # Main Library / Executable definitions will go here or in subdirectories

@@ -89,3 +89,12 @@
     *   [ ] **Scripting API**: Lua bindings for automating timeline tasks.
     *   [ ] **Hardware Encoding**: Integrate NVENC/QSV in Render Worker.
 *   **Testing**: Sync 2 clips by audio, toggle proxies during playback, run a Lua script to add a clip.
+
+## Sprint 11: Cloud Collaboration & Remote Review (Days 147-160)
+*   **Goal**: Enable remote team collaboration and review workflows.
+*   **Deliverables**:
+    *   [ ] **Cloud Client**: C++ REST client for API communication.
+    *   [ ] **Review Panel**: UI for displaying time-coded comments.
+    *   [ ] **Project Sync**: Logic to sync project database to cloud.
+    *   [ ] **Documentation**: Comprehensive README and Developer Guide.
+*   **Testing**: Post a comment on a timestamp, verify it appears on another client (mocked).
