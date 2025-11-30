@@ -1,0 +1,63 @@
+name: Release Build
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      
+      - name: Build Windows Release
+        run: |
+          cd app_flutter
+          flutter pub get
+          flutter build windows --release
+      
+      - name: Package Release
+        run: |
+          mkdir release
+          copy -Recurse build/windows/x64/runner/Release/* release/
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: picasoo-windows
+          path: release/
+  
+  build-macos:
+    runs-on: macos-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      
+      - name: Build macOS Release
+        run: |
+          cd app_flutter
+          flutter pub get
+          flutter build macos --release
+      
+      - name: Package Release
+        run: |
+          mkdir -p release
+          cp -r build/macos/Build/Products/Release/Picasoo.app release/
+      
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: picasoo-macos
+          path: release/

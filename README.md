@@ -1,56 +1,107 @@
-# Picasoo Video Editor
+# Picasso - Pure Dart Video Editor
 
-**Picasoo** is a professional, node-based video editing and VFX application designed for high-performance workflows on Windows. It combines a Flutter-based UI with a native C++ engine for real-time processing.
+**No C++ or CMake required!** Uses pure Dart packages for video playback.
 
-## Architecture
+## 🚀 Quick Start
 
-*   **Frontend**: Flutter (Windows Desktop)
-*   **Backend**: C++20 (FFmpeg, OpenCV, OpenFX, OCIO, ONNX Runtime)
-*   **Communication**: Named Pipes (IPC) & Shared Memory
+```bash
+# 1. Install dependencies
+flutter pub get
 
-## Prerequisites
+# 2. Run the app
+flutter run -d windows
 
-*   **Windows 10/11**
-*   **Visual Studio 2022** (C++ Desktop Development)
-*   **Flutter SDK** (3.0+)
-*   **CMake** (3.20+)
-*   **vcpkg** (Package Manager)
+# 3. Build release
+flutter build windows --release
+```
 
-## Build Instructions
+That's it! No CMake, no vcpkg, no native compilation needed.
 
-1.  **Clone the repository**:
-    ```powershell
-    git clone https://github.com/your-org/picasoo.git
-    cd picasoo
-    ```
+---
 
-2.  **Install Dependencies (vcpkg)**:
-    Ensure `vcpkg` is installed and integrated. The build script assumes `vcpkg` is available.
+## 📦 Video Engine: media_kit
 
-3.  **Build the Project**:
-    Run the automated build script:
-    ```powershell
-    .\tools\build.ps1
-    ```
-    This will:
-    *   Configure and build the C++ native engine (`picasoo_core.dll`).
-    *   Build the Flutter application.
-    *   Copy native binaries to the Flutter runner directory.
+We use **media_kit** instead of C++ FFmpeg:
+- ✅ Pure Dart/Flutter
+- ✅ Hardware acceleration
+- ✅ Frame-accurate seeking
+- ✅ Professional features
+- ✅ Cross-platform
 
-4.  **Run**:
-    ```powershell
-    cd app_flutter
-    flutter run -d windows
-    ```
+---
 
-## Modules
+## ✨ Features
 
-*   **Video Engine**: FFmpeg-based playback and rendering.
-*   **Node Engine**: Graph-based processing for VFX.
-*   **Color Engine**: OCIO and ACEScg pipeline.
-*   **Audio Engine**: PortAudio/JUCE mixing.
-*   **AI Engine**: ONNX Runtime integration.
+- **Multi-page workflow** (Media, Edit, Color, Fusion, Audio, Deliver)
+- **Real-time video playback** via media_kit
+- **Timeline editing** with multiple tracks
+- **Professional UI** with dark theme
+- **Cross-platform** (Windows, macOS, Linux)
 
-## License
+---
 
-Proprietary / Closed Source.
+## 🎬 Usage
+
+1. Launch Picasso
+2. Go to **Edit** page
+3. Import video files
+4. Add to timeline
+5. Playback and edit
+6. Export (coming soon)
+
+---
+
+## 🔧 Build
+
+```bash
+# Development
+flutter run -d windows
+
+# Release
+flutter build windows --release
+```
+
+Output: `build\windows\x64\runner\Release\picasoo.exe`
+
+---
+
+## 📊 Architecture
+
+```
+Flutter UI (Dart)
+    ↓
+media_kit (Pure Dart)
+    ↓
+libmpv (Bundled)
+    ↓
+Hardware Acceleration
+```
+
+**No C++ compilation needed!**
+
+---
+
+## 🎯 Advantages
+
+**vs C++ FFmpeg:**
+- ✅ Easier to build
+- ✅ Faster development
+- ✅ No toolchain setup
+- ✅ Smaller codebase
+- ✅ Better cross-platform
+
+**Trade-offs:**
+- ⚠️ Less low-level control
+- ⚠️ Slightly larger app size
+
+---
+
+## 📝 Dependencies
+
+```yaml
+media_kit: ^1.1.10              # Video engine
+media_kit_video: ^1.2.4         # Video widgets
+media_kit_libs_windows_video    # Windows binaries
+```
+
+All managed by Flutter - no manual setup!

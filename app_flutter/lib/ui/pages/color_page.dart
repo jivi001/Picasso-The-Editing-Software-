@@ -9,14 +9,14 @@ class ColorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: PicasooColors.surface0,
-      child: Center(
+      child: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.palette, size: 64, color: PicasooColors.secondary),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text('Color Page', style: PicasooTypography.display),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text('Color grading tools coming soon',
                 style: PicasooTypography.body),
           ],

@@ -9,14 +9,14 @@ class DeliverPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: PicasooColors.surface0,
-      child: Center(
+      child: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.rocket_launch, size: 64, color: PicasooColors.success),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text('Deliver Page', style: PicasooTypography.display),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text('Export and delivery tools coming soon',
                 style: PicasooTypography.body),
           ],

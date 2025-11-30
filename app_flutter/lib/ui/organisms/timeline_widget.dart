@@ -14,13 +14,13 @@ class TimelineWidget extends StatelessWidget {
           height: 32,
           color: PicasooColors.surface2,
           padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Row(
+          child: const Row(
             children: [
               Text('Timeline 1', style: PicasooTypography.h2),
-              const Spacer(),
-              const Icon(Icons.grid_on, size: 16, color: PicasooColors.textMed),
-              const SizedBox(width: 16),
-              const Icon(Icons.link, size: 16, color: PicasooColors.textMed),
+              Spacer(),
+              Icon(Icons.grid_on, size: 16, color: PicasooColors.textMed),
+              SizedBox(width: 16),
+              Icon(Icons.link, size: 16, color: PicasooColors.textMed),
             ],
           ),
         ),
@@ -57,7 +57,7 @@ class TimelineWidget extends StatelessWidget {
                   ),
                 ),
                 // Tracks Area
-                Expanded(
+                const Expanded(
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -108,7 +108,7 @@ class _VideoTrack extends StatelessWidget {
                     style: PicasooTypography.small
                         .copyWith(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4),
-                Row(
+                const Row(
                   children: [
                     _TrackIcon(Icons.lock_open),
                     SizedBox(width: 4),
@@ -139,7 +139,7 @@ class _VideoTrack extends StatelessWidget {
                         borderRadius: BorderRadius.circular(2),
                         border: Border.all(color: PicasooColors.primary),
                       ),
-                      child: Center(
+                      child: const Center(
                         child: Text('Clip 001', style: PicasooTypography.small),
                       ),
                     ),
@@ -184,7 +184,7 @@ class _AudioTrack extends StatelessWidget {
                     style: PicasooTypography.small
                         .copyWith(fontWeight: FontWeight.bold)),
                 const SizedBox(height: 4),
-                Row(
+                const Row(
                   children: [
                     _TrackIcon(Icons.lock_open),
                     SizedBox(width: 4),
@@ -215,7 +215,7 @@ class _AudioTrack extends StatelessWidget {
                         borderRadius: BorderRadius.circular(2),
                         border: Border.all(color: PicasooColors.success),
                       ),
-                      child: Center(
+                      child: const Center(
                         child:
                             Text('Audio 001', style: PicasooTypography.small),
                       ),

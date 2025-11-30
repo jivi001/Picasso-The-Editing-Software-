@@ -16,7 +16,7 @@ class MediaPoolWidget extends StatelessWidget {
           color: PicasooColors.surface2,
           child: Row(
             children: [
-              Text('Media Pool', style: PicasooTypography.h2),
+              const Text('Media Pool', style: PicasooTypography.h2),
               const Spacer(),
               IconButton(
                 icon: const Icon(Icons.search, size: 16),
@@ -88,10 +88,10 @@ class _MediaItemState extends State<_MediaItem> {
           children: [
             Expanded(
               child: Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.black,
                   borderRadius:
-                      const BorderRadius.vertical(top: Radius.circular(2)),
+                      BorderRadius.vertical(top: Radius.circular(2)),
                 ),
                 child: const Center(
                   child: Icon(Icons.movie, color: PicasooColors.textLow),

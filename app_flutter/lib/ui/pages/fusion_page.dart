@@ -9,14 +9,14 @@ class FusionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: PicasooColors.surface0,
-      child: Center(
+      child: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(Icons.hub, size: 64, color: PicasooColors.info),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
             Text('Fusion Page', style: PicasooTypography.display),
-            const SizedBox(height: 8),
+            SizedBox(height: 8),
             Text('Node-based compositing coming soon',
                 style: PicasooTypography.body),
           ],

@@ -61,7 +61,7 @@ class _MainWindowLayoutState extends State<MainWindowLayout> {
                 const Icon(Icons.menu, color: PicasooColors.textMed),
                 const SizedBox(width: 16),
                 // Project Name
-                Text('Untitled Project', style: PicasooTypography.h2),
+                const Text('Untitled Project', style: PicasooTypography.h2),
                 const Spacer(),
                 // Workspace Tools
                 PicasooButton(

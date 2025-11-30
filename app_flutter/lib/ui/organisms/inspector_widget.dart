@@ -16,10 +16,10 @@ class InspectorWidget extends StatelessWidget {
           height: 32,
           padding: const EdgeInsets.symmetric(horizontal: 8),
           color: PicasooColors.surface2,
-          child: Row(
+          child: const Row(
             children: [
-              const Icon(Icons.tune, size: 16, color: PicasooColors.textMed),
-              const SizedBox(width: 8),
+              Icon(Icons.tune, size: 16, color: PicasooColors.textMed),
+              SizedBox(width: 8),
               Text('Inspector', style: PicasooTypography.h2),
             ],
           ),
@@ -31,9 +31,9 @@ class InspectorWidget extends StatelessWidget {
             child: ListView(
               padding: const EdgeInsets.all(12),
               children: [
-                _SectionHeader(title: 'Video'),
+                const _SectionHeader(title: 'Video'),
                 const SizedBox(height: 12),
-                _PropertyRow(
+                const _PropertyRow(
                   label: 'Zoom',
                   child: Row(
                     children: [
@@ -48,7 +48,7 @@ class InspectorWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                _PropertyRow(
+                const _PropertyRow(
                   label: 'Position',
                   child: Row(
                     children: [
@@ -63,16 +63,16 @@ class InspectorWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 8),
-                _PropertyRow(
+                const _PropertyRow(
                   label: 'Rotation',
                   child: PicasooInput(isNumber: true, initialValue: 0.0),
                 ),
                 const SizedBox(height: 24),
                 const Divider(color: PicasooColors.border),
                 const SizedBox(height: 12),
-                _SectionHeader(title: 'Composite'),
+                const _SectionHeader(title: 'Composite'),
                 const SizedBox(height: 12),
-                _PropertyRow(
+                const _PropertyRow(
                   label: 'Opacity',
                   child: PicasooInput(isNumber: true, initialValue: 100.0),
                 ),
@@ -87,7 +87,7 @@ class InspectorWidget extends StatelessWidget {
                       borderRadius: BorderRadius.circular(2),
                       border: Border.all(color: PicasooColors.border),
                     ),
-                    child: Align(
+                    child: const Align(
                       alignment: Alignment.centerLeft,
                       child: Text('Normal', style: PicasooTypography.body),
                     ),
