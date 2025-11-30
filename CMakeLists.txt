@@ -21,6 +21,7 @@ find_package(unofficial-sqlite3 CONFIG REQUIRED)
 add_subdirectory(native/common)
 add_subdirectory(native/video_engine)
 add_subdirectory(native/ipc)
+add_subdirectory(native/node_runtime)
 # add_subdirectory(native/panels)       # Uncomment when created
 
 # Main Library / Executable definitions will go here or in subdirectories
