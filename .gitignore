@@ -1,11 +1,9 @@
 # Miscellaneous
 *.class
-*.log
 *.pyc
 *.swp
 .DS_Store
 .atom/
-.build/
 .buildlog/
 .history
 .svn/
@@ -18,20 +16,22 @@ migrate_working_dir/
 *.iws
 .idea/
 
-# The .vscode folder contains launch configuration and tasks you configure in
-# VS Code which you may wish to be included in version control, so this line
-# is commented out by default.
-#.vscode/
+# VS Code
+.vscode/
 
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
 .dart_tool/
+.flutter-plugins
 .flutter-plugins-dependencies
+.packages
 .pub-cache/
 .pub/
-/build/
-/coverage/
+build/
+coverage/
+app_flutter/build/
+app_flutter/.dart_tool/
 
 # Symbolication related
 app.*.symbols
@@ -43,3 +43,54 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# CMake & C++ Build artifacts
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+*.cmake
+!CMakeLists.txt
+*.vcxproj*
+*.sln
+*.suo
+*.user
+*.filters
+out/
+x64/
+Debug/
+Release/
+.vs/
+
+# Native build outputs
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.pdb
+*.ilk
+
+# JVM crash logs
+hs_err_pid*.log
+replay_pid*.log
+
+# Platform-specific build directories
+windows/flutter/ephemeral/
+linux/flutter/ephemeral/
+macos/Flutter/ephemeral/
+
+# vcpkg
+vcpkg_installed/
+
+# Antigravity artifacts (optional - uncomment if you don't want to commit)
+# .gemini/
+
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release
+

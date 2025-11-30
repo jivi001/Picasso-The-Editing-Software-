@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import '../../core/theme/picasoo_colors.dart';
 import '../../core/theme/picasoo_typography.dart';
 
-class DeliverPage extends StatelessWidget {
-  const DeliverPage({super.key});
+class MediaPage extends StatelessWidget {
+  const MediaPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +13,11 @@ class DeliverPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(Icons.rocket_launch, size: 64, color: PicasooColors.success),
+            Icon(Icons.folder_open, size: 64, color: PicasooColors.primary),
             const SizedBox(height: 16),
-            Text('Deliver Page', style: PicasooTypography.display),
+            Text('Media Page', style: PicasooTypography.display),
             const SizedBox(height: 8),
-            Text('Export and delivery tools coming soon',
-                style: PicasooTypography.body),
+            Text('Media management coming soon', style: PicasooTypography.body),
           ],
         ),
       ),
