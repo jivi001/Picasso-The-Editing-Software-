@@ -28,7 +28,7 @@ class NodeWidget extends StatelessWidget {
             border: Border.all(color: Colors.grey[600]!),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.5),
+                color: Colors.black.withValues(alpha: 0.5),
                 blurRadius: 4,
                 offset: const Offset(2, 2),
               ),
@@ -42,11 +42,13 @@ class NodeWidget extends StatelessWidget {
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.grey[900],
-                  borderRadius: const BorderRadius.vertical(top: Radius.circular(8)),
+                  borderRadius:
+                      const BorderRadius.vertical(top: Radius.circular(8)),
                 ),
                 child: Text(
                   node.name,
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                  style: const TextStyle(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
               // Pins
@@ -58,12 +60,14 @@ class NodeWidget extends StatelessWidget {
                     // Inputs
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: node.inputs.map((pin) => _buildPin(pin)).toList(),
+                      children:
+                          node.inputs.map((pin) => _buildPin(pin)).toList(),
                     ),
                     // Outputs
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
-                      children: node.outputs.map((pin) => _buildPin(pin)).toList(),
+                      children:
+                          node.outputs.map((pin) => _buildPin(pin)).toList(),
                     ),
                   ],
                 ),
@@ -83,7 +87,8 @@ class NodeWidget extends StatelessWidget {
         children: [
           if (pin.type == PinType.input) _pinCircle(),
           const SizedBox(width: 4),
-          Text(pin.name, style: const TextStyle(color: Colors.white70, fontSize: 12)),
+          Text(pin.name,
+              style: const TextStyle(color: Colors.white70, fontSize: 12)),
           const SizedBox(width: 4),
           if (pin.type == PinType.output) _pinCircle(),
         ],

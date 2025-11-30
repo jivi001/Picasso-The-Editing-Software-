@@ -6,8 +6,6 @@ class ShortcutManager {
   factory ShortcutManager() => _instance;
   ShortcutManager._internal();
 
-  final Map<LogicalKeySet, String> _keymap = {};
-
   void loadKeymap(String jsonString) {
     final Map<String, dynamic> data = jsonDecode(jsonString);
     data.forEach((command, key) {
@@ -17,8 +15,8 @@ class ShortcutManager {
     });
   }
 
-  String? getCommand(RawKeyEvent event) {
-    // Check against _keymap
+  String? getCommand(KeyEvent event) {
+    // Placeholder for command lookup logic
     return null;
   }
 }

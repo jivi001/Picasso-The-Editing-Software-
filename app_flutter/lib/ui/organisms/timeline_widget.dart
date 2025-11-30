@@ -92,6 +92,7 @@ class _VideoTrack extends StatelessWidget {
           // Track Header
           Container(
             width: 120,
+            padding: const EdgeInsets.all(8),
             decoration: const BoxDecoration(
               color: PicasooColors.surface1,
               border: Border(
@@ -134,7 +135,7 @@ class _VideoTrack extends StatelessWidget {
                     width: 200,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: PicasooColors.primary.withOpacity(0.5),
+                        color: PicasooColors.primary.withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(2),
                         border: Border.all(color: PicasooColors.primary),
                       ),
@@ -167,6 +168,7 @@ class _AudioTrack extends StatelessWidget {
           // Track Header
           Container(
             width: 120,
+            padding: const EdgeInsets.all(8),
             decoration: const BoxDecoration(
               color: PicasooColors.surface1,
               border: Border(
@@ -209,7 +211,7 @@ class _AudioTrack extends StatelessWidget {
                     width: 150,
                     child: Container(
                       decoration: BoxDecoration(
-                        color: PicasooColors.success.withOpacity(0.5),
+                        color: PicasooColors.success.withValues(alpha: 0.5),
                         borderRadius: BorderRadius.circular(2),
                         border: Border.all(color: PicasooColors.success),
                       ),

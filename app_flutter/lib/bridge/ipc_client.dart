@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 
 class IpcClient {
   final String pipeName;
@@ -15,9 +16,9 @@ class IpcClient {
         final path = '\\\\.\\pipe\\$pipeName';
         _pipe = await File(path).open(mode: FileMode.write);
         _connected = true;
-        print('Connected to pipe: $pipeName');
+        debugPrint('Connected to pipe: $pipeName');
       } catch (e) {
-        print('Waiting for pipe... $e');
+        debugPrint('Waiting for pipe... $e');
         await Future.delayed(const Duration(seconds: 1));
       }
     }
@@ -29,7 +30,7 @@ class IpcClient {
         _pipe!.writeStringSync(message);
         _pipe!.flushSync();
       } catch (e) {
-        print('Error sending message: $e');
+        debugPrint('Error sending message: $e');
         _connected = false;
         _pipe?.close();
       }

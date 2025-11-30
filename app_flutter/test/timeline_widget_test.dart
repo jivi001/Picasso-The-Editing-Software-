@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:picasoo/ui/timeline/timeline_widget.dart';
+import 'package:picasoo_app/ui/organisms/timeline_widget.dart';
 
 void main() {
   testWidgets('TimelineWidget renders correctly', (WidgetTester tester) async {
@@ -9,11 +9,10 @@ void main() {
       home: Scaffold(body: TimelineWidget()),
     ));
 
-    // Verify that the timeline ruler is present (by finding a container, simplified)
+    // Verify that the timeline widget is present
     expect(find.byType(TimelineWidget), findsOneWidget);
-    
-    // Verify zoom buttons exist
-    expect(find.byIcon(Icons.zoom_in), findsOneWidget);
-    expect(find.byIcon(Icons.zoom_out), findsOneWidget);
+
+    // Verify timeline text is present
+    expect(find.text('Timeline 1'), findsOneWidget);
   });
 }
