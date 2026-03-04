@@ -17,3 +17,9 @@ export interface Item {
   createdAt: string;
   updatedAt: string;
 }
+
+export interface DashboardSummary {
+  total: number;
+  active: number;
+  done: number;
+}

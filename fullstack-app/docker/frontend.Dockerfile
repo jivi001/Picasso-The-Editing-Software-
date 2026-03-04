@@ -1,7 +1,7 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-COPY package.json package-lock.json* ./
+COPY package.json ./
 COPY backend/package.json backend/package.json
 COPY frontend/package.json frontend/package.json
 
@@ -18,7 +18,7 @@ FROM node:20-alpine AS runner
 WORKDIR /app
 ENV NODE_ENV=production
 
-COPY package.json package-lock.json* ./
+COPY package.json ./
 COPY frontend/package.json frontend/package.json
 
 RUN npm install --omit=dev --workspace frontend --include-workspace-root=false

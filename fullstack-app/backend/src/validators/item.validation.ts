@@ -2,9 +2,15 @@ import { z } from "zod";
 
 const itemStatusSchema = z.enum(["todo", "in_progress", "done"]);
 
-const dueDateSchema = z
-  .union([z.string().regex(/^\d{4}-\d{2}-\d{2}$/), z.null()])
-  .optional();
+const isoDateSchema = z
+  .string()
+  .regex(/^\d{4}-\d{2}-\d{2}$/)
+  .refine((value) => {
+    const timestamp = Date.parse(`${value}T00:00:00Z`);
+    return !Number.isNaN(timestamp);
+  }, "Invalid date");
+
+const dueDateSchema = z.union([isoDateSchema, z.null()]).optional();
 
 export const createItemSchema = z.object({
   title: z.string().trim().min(1).max(120),

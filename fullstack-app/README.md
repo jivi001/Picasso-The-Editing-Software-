@@ -7,6 +7,7 @@ TaskForge is a full-stack task dashboard with JWT authentication, secure passwor
 ### System architecture
 - `frontend` (Next.js + React + TypeScript + Tailwind): handles auth UI and dashboard CRUD.
 - `backend` (Express + TypeScript): exposes REST APIs, validates input, enforces auth/rate limits, and talks to PostgreSQL.
+- Backend layering: `routes -> controllers -> services -> repositories -> db`.
 - `database` (PostgreSQL + SQL migrations): normalized `users` and `items` schema.
 - `docker` (Dockerfiles + docker-compose): local production-like orchestration.
 
@@ -36,6 +37,7 @@ fullstack-app/
       controllers/
       db/
       middleware/
+      repositories/
       routes/
       services/
       types/
@@ -68,6 +70,7 @@ Backend features implemented:
 - JWT auth endpoints: signup/login/logout/me
 - User endpoints: list current user and profile
 - Item endpoints: full CRUD
+- Dashboard summary endpoint for aggregate stats
 - Validation middleware and schemas
 - Auth middleware for protected routes
 - Rate limiter and secure headers
@@ -131,9 +134,21 @@ npm install
 ### 2) Configure environment
 1. Copy root env file:
    ```bash
+   # macOS/Linux
    cp .env.example .env
+
+   # Windows (cmd)
+   copy .env.example .env
    ```
-2. Update values as needed (`DATABASE_URL`, `JWT_SECRET`, etc.).
+2. Optional frontend override:
+   ```bash
+   # macOS/Linux
+   cp frontend/.env.example frontend/.env.local
+
+   # Windows (cmd)
+   copy frontend\.env.example frontend\.env.local
+   ```
+3. Update values as needed (`DATABASE_URL`, `JWT_SECRET`, etc.).
 
 ### 3) Run with local PostgreSQL
 ```bash
@@ -196,6 +211,9 @@ Base URL: `http://localhost:4000/api`
 ### Users
 - `GET /users` (auth required)
 - `GET /users/me` (auth required)
+
+### Dashboard
+- `GET /dashboard/summary` (auth required)
 
 ### Items
 - `GET /items` (auth required)

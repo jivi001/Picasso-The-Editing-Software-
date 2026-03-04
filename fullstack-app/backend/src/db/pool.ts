@@ -1,7 +1,10 @@
-import { Pool, PoolClient, QueryResult } from "pg";
+import { Pool, PoolClient, QueryResult, types } from "pg";
 
 import { env } from "../config/env";
 import { logger } from "../config/logger";
+
+// Parse PostgreSQL BIGINT values as numbers for typed API responses.
+types.setTypeParser(20, (value: string): number => Number(value));
 
 export const pool = new Pool({
   connectionString: env.DATABASE_URL

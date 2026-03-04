@@ -6,7 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 
 import ItemCard from "@/components/ItemCard";
 import ItemForm, { ItemDraft } from "@/components/ItemForm";
-import { ApiError, Item, User, apiClient } from "@/lib/api";
+import { ApiError, DashboardSummary, Item, User, apiClient } from "@/lib/api";
 import { authStorage } from "@/lib/auth";
 
 const EMPTY_DRAFT: ItemDraft = {
@@ -34,6 +34,11 @@ export default function DashboardPage() {
   const [token, setToken] = useState<string | null>(null);
   const [user, setUser] = useState<User | null>(null);
   const [items, setItems] = useState<Item[]>([]);
+  const [summary, setSummary] = useState<DashboardSummary>({
+    total: 0,
+    active: 0,
+    done: 0
+  });
   const [draft, setDraft] = useState<ItemDraft>(EMPTY_DRAFT);
   const [editingItemId, setEditingItemId] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -43,11 +48,11 @@ export default function DashboardPage() {
 
   const metrics = useMemo(
     () => ({
-      total: items.length,
-      active: items.filter((item) => item.status !== "done").length,
-      done: items.filter((item) => item.status === "done").length
+      total: summary.total,
+      active: summary.active,
+      done: summary.done
     }),
-    [items]
+    [summary]
   );
 
   const clearSessionAndRedirect = () => {
@@ -60,12 +65,14 @@ export default function DashboardPage() {
     setError(null);
 
     try {
-      const [meResponse, itemResponse] = await Promise.all([
+      const [meResponse, itemResponse, summaryResponse] = await Promise.all([
         apiClient.me(accessToken),
-        apiClient.listItems(accessToken)
+        apiClient.listItems(accessToken),
+        apiClient.dashboardSummary(accessToken)
       ]);
       setUser(meResponse.user);
       setItems(itemResponse.items);
+      setSummary(summaryResponse.summary);
     } catch (bootstrapError) {
       if (bootstrapError instanceof ApiError && bootstrapError.statusCode === 401) {
         clearSessionAndRedirect();
@@ -75,6 +82,11 @@ export default function DashboardPage() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const refreshSummary = async (accessToken: string): Promise<void> => {
+    const summaryResponse = await apiClient.dashboardSummary(accessToken);
+    setSummary(summaryResponse.summary);
   };
 
   useEffect(() => {
@@ -120,6 +132,8 @@ export default function DashboardPage() {
         setItems((currentItems) => [response.item, ...currentItems]);
       }
 
+      await refreshSummary(token);
+
       resetForm();
     } catch (saveError) {
       if (saveError instanceof ApiError && saveError.statusCode === 401) {
@@ -159,6 +173,7 @@ export default function DashboardPage() {
     try {
       await apiClient.deleteItem(token, item.id);
       setItems((currentItems) => currentItems.filter((currentItem) => currentItem.id !== item.id));
+      await refreshSummary(token);
       if (editingItemId === item.id) {
         resetForm();
       }

@@ -25,6 +25,12 @@ export interface ItemPayload {
   dueDate?: string | null;
 }
 
+export interface DashboardSummary {
+  total: number;
+  active: number;
+  done: number;
+}
+
 interface AuthPayload {
   email: string;
   password: string;
@@ -61,13 +67,13 @@ const request = async <T>(
   path: string,
   init: RequestInit & { token?: string } = {}
 ): Promise<T> => {
-  const headers: HeadersInit = {
-    "Content-Type": "application/json",
-    ...(init.headers ?? {})
-  };
+  const headers = new Headers(init.headers ?? {});
+  if (!headers.has("Content-Type")) {
+    headers.set("Content-Type", "application/json");
+  }
 
   if (init.token) {
-    headers.Authorization = `Bearer ${init.token}`;
+    headers.set("Authorization", `Bearer ${init.token}`);
   }
 
   const response = await fetch(`${API_URL}${path}`, {
@@ -108,6 +114,12 @@ export const apiClient = {
 
   me: (token: string) =>
     request<{ user: User }>("/auth/me", {
+      method: "GET",
+      token
+    }),
+
+  dashboardSummary: (token: string) =>
+    request<{ summary: DashboardSummary }>("/dashboard/summary", {
       method: "GET",
       token
     }),
