@@ -1,0 +1,9 @@
+process.env.NODE_ENV = "test";
+process.env.PORT = "4000";
+process.env.DATABASE_URL = "postgres://postgres:postgres@localhost:5432/taskforge";
+process.env.JWT_SECRET = "test-secret-key-with-safe-length";
+process.env.JWT_EXPIRES_IN = "1d";
+process.env.FRONTEND_URL = "http://localhost:3000";
+process.env.RATE_LIMIT_WINDOW_MS = "900000";
+process.env.RATE_LIMIT_MAX = "100";
+process.env.BCRYPT_SALT_ROUNDS = "10";
